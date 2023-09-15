@@ -1,0 +1,24 @@
+.control{  
+text-align: center;    
+margin: auto;
+}
+
+.control-navigation {
+margin-bottom: 20px;
+
+}
+
+.control-avigation__buttone {
+border: none; 
+border-radius: 0;
+background-color: transparent;
+border-bottom: 1px solid #E8E8E8;
+transition: border-bottom-color 0.3s;
+
+}
+
+.control-search {
+width: 938px;
+max-height: 40px;
+margin-bottom: 34px;
+}
