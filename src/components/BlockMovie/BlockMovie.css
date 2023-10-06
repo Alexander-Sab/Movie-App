@@ -1,0 +1,83 @@
+.block-movie {
+  width: 451px;
+  min-height: 279px;
+  margin-right: 36px; 
+  margin-bottom: 37px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  background-color: #FDF6FF;
+  display: flex;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+}
+
+.block-movie:hover {
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.3); /* добавленный стиль при наведении */
+}
+
+.description {
+  padding-left: 20px;
+  
+}
+
+.description-title {
+width: 80%;
+margin: 0px;
+font-size: 20px;
+}
+
+.description-production {
+  margin-bottom: 9px;
+}
+
+.description-genre {
+margin-bottom: 7px;
+}
+
+.description-genre__action {
+  padding-right: 12px;
+}
+
+.description-story__text {
+max-width: 228px;
+max-height: 129px;
+font-family: Inter UI;
+font-size: 12px;
+line-height: 22px;
+letter-spacing: 0px;
+text-align: left;
+overflow: hidden;
+text-overflow: ellipsis;
+margin-bottom: auto;
+}
+
+.block {
+    width: 240px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 7px;
+}
+
+.rating-circle {
+    
+   
+    
+    
+    display: flex;
+    border: 3px solid;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    justify-self: end;
+    background-color: transparent;
+    box-shadow: 0 0 3px rgba(3, 3, 3, 0.3);
+  }
+
+  .rate {
+    display: block;
+    
+  }
