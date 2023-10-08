@@ -6,7 +6,10 @@ import { GenreProvider } from '../GenreContext/GenreContext'
 import Header from '../Header'
 import MovieServices from '../../services/MovieServices'
 import BlockMovie from '../BlockMovie'
-
+import {
+  NO_RATED_MOVIES_MESSAGE,
+  NO_INTERNET_MESSAGE,
+} from '../constants/constants'
 import './app.css'
 
 export class App extends Component {
@@ -128,7 +131,7 @@ export class App extends Component {
   renderRatedTab = () => {
     const { ratedMovies, genres } = this.state
     if (!ratedMovies || ratedMovies.length === 0) {
-      return <p>Не найдено оцененных фильмов</p>
+      return <p>{NO_RATED_MOVIES_MESSAGE}</p>
     }
     return (
       <GenreProvider genres={genres}>
@@ -170,13 +173,13 @@ export class App extends Component {
                 className={activeTab === 'search' ? 'active' : ''}
                 onClick={() => this.handleTabChange('search')}
               >
-                Поиск
+                Search
               </Button>
               <Button
                 className={activeTab === 'rated' ? 'active' : ''}
                 onClick={() => this.handleTabChange('rated')}
               >
-                Оцененные
+                Rated
               </Button>
             </div>
             {activeTab === 'search'
@@ -187,7 +190,7 @@ export class App extends Component {
         <Offline>
           <div className="no-internet">
             <div className="no-internet-book" alt="нет интернета" />
-            <span>Упс!!! Нет подключения к интернету</span>
+            <span>{NO_INTERNET_MESSAGE}</span>
           </div>
         </Offline>
       </>

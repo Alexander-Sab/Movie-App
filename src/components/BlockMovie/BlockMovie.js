@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 import { Rate, Space, Spin, Alert } from 'antd'
 
 import { GenreContext } from '../GenreContext/GenreContext'
+import { shortenText, handleImageError } from '../utils/utils'
+import {
+  NO_OVERVIEW_MESSAGE,
+  IMAGE_ERROR_MESSAGE,
+} from '../constants/constants'
 import './BlockMovie.css'
+
 export class BlockMovie extends Component {
   state = {
     loading: false,
@@ -16,6 +22,11 @@ export class BlockMovie extends Component {
     }
   }
   componentDidMount() {
+    this.setState({ loading: true }, () => {
+      setTimeout(() => {
+        this.setState({ loading: false })
+      }, 2000)
+    })
     const { movieId, rating } = this.props
     const savedRating = localStorage.getItem(`movieRating_${movieId}`)
     if (savedRating) {
@@ -23,15 +34,6 @@ export class BlockMovie extends Component {
     } else if (rating) {
       this.setState({ rating })
     }
-  }
-  shortenText = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.slice(0, maxLength) + '...'
-    }
-    return text
-  }
-  handleImageError = () => {
-    this.setState({ imageError: true })
   }
   renderLoadingSpinner = () => {
     return (
@@ -44,9 +46,7 @@ export class BlockMovie extends Component {
   }
   renderErrorAlert = () => {
     const { error } = this.state
-    return (
-      <Alert message={error || 'Ошибка загрузки изображения'} type="error" />
-    )
+    return <Alert message={error || IMAGE_ERROR_MESSAGE} type="error" />
   }
   renderMovieScene = () => {
     const { imageError } = this.state
@@ -59,7 +59,7 @@ export class BlockMovie extends Component {
         className="scene-cover"
         src={`https://image.tmdb.org/t/p/w500${poster_path}`}
         alt=""
-        onError={this.handleImageError}
+        onError={handleImageError}
         onLoad={this.handleImageLoad}
       />
     )
@@ -89,10 +89,9 @@ export class BlockMovie extends Component {
       movieId,
     } = this.props
     const { ratings } = this.state
-    // Получение оценки для текущего фильма из состояния ratings
     const grade =
       ratings[movieId] !== undefined ? ratings[movieId] : vote_average
-    const shortenedDescription = overview ? this.shortenText(overview, 310) : ''
+    const shortenedDescription = overview ? shortenText(overview, 310) : ''
     let circleColor = '#E90000'
     if (vote_average >= 3 && vote_average < 5) {
       circleColor = '#E97E00'
@@ -130,9 +129,19 @@ export class BlockMovie extends Component {
                 return null
               })}
             </div>
-            <div className="description-story">
-              <p className="description-story__text">{shortenedDescription}</p>
-            </div>
+            {overview ? (
+              <div className="description-story">
+                <p className="description-story__text">
+                  {shortenedDescription}
+                </p>
+              </div>
+            ) : (
+              <div className="description-story">
+                <p className="description-story__text-absence">
+                  {NO_OVERVIEW_MESSAGE}
+                </p>
+              </div>
+            )}
           </div>
         )}
       </GenreContext.Consumer>
@@ -152,7 +161,7 @@ export class BlockMovie extends Component {
               <div className="rate">
                 <Rate
                   count={10}
-                  value={rating} // Используйте значение rating из состояния
+                  value={rating}
                   onChange={(newRating) => this.handleBlockMovieRate(newRating)}
                 />
               </div>

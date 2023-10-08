@@ -2,6 +2,7 @@ import { Input } from 'antd'
 import { debounce } from 'lodash'
 import React, { useState } from 'react'
 
+import { DEBOUNCE_DELAY } from '../constants/constants'
 import './Header.css'
 
 const Header = ({ onSearch }) => {
@@ -9,7 +10,7 @@ const Header = ({ onSearch }) => {
 
   const handleSearchChange = debounce((value) => {
     onSearch(value)
-  }, 300)
+  }, DEBOUNCE_DELAY)
 
   const handleInputChange = (e) => {
     const value = e.target.value

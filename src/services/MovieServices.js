@@ -1,8 +1,14 @@
 import axios from 'axios'
 
+import {
+  API_KEY,
+  BASE_URL,
+  GENRE_LANGUAGE,
+} from '../components/constants/constants'
+
 class MovieServices {
-  static apiKey = 'd8bf944b03cd2f8fd5f634711d8edec0'
-  static baseUrl = 'https://api.themoviedb.org/3/'
+  static apiKey = API_KEY
+  static baseUrl = BASE_URL
   static options = {
     headers: {
       'Content-Type': 'application/json',
@@ -29,7 +35,7 @@ class MovieServices {
   static getGenres() {
     const url = `${this.baseUrl}genre/movie/list`
     const params = {
-      language: 'ru-RU', // Установите язык на 'ru-RU' для получения названий жанров на русском языке
+      language: GENRE_LANGUAGE, // Установите язык на 'ru-RU' для получения названий жанров на русском языке
       api_key: this.apiKey,
     }
     return axios
