@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
-import { Pagination, Button } from 'antd'
-import { Offline, Online } from 'react-detect-offline'
 
-import { GenreProvider } from '../GenreContext/GenreContext'
-import Header from '../Header'
 import MovieServices from '../../services/MovieServices'
-import BlockMovie from '../BlockMovie'
-import {
-  NO_RATED_MOVIES_MESSAGE,
-  NO_INTERNET_MESSAGE,
-} from '../constants/constants'
+import SearchTab from '../SearchTab'
+import RatedTab from '../RatedTab'
+import OnlineOfflineComponent from '../OnlineOfflineComponent'
+import { NO_RATED_MOVIES_MESSAGE } from '../constants/constants'
 import './app.css'
 
 export class App extends Component {
@@ -21,7 +16,7 @@ export class App extends Component {
     activeTab: 'search',
     genres: [],
     guestSessionId: null,
-    ratedMovies: [], // Добавлено поле ratedMovies в состояние
+    ratedMovies: [],
   }
 
   async componentDidMount() {
@@ -65,7 +60,6 @@ export class App extends Component {
 
   handleRate = (movieId, newRating) => {
     newRating = Math.min(10, Math.max(1, newRating))
-    console.log('ответ newRating', newRating)
     const { movies, guestSessionId } = this.state
     const movieIndex = movies.findIndex((movie) => movie.id === movieId)
     if (movieIndex === -1) {
@@ -75,15 +69,14 @@ export class App extends Component {
     updatedMovies[movieIndex].rating = newRating
     this.setState({ movies: updatedMovies }, () => {
       MovieServices.rateMovie(movieId, newRating, guestSessionId)
-        .then((response) => {
-          console.log(response)
+        .then(() => {
           localStorage.setItem(`movieRating_${movieId}`, newRating.toString())
           const ratedMovies = updatedMovies.filter((movie) => {
             const savedRating = localStorage.getItem(`movieRating_${movie.id}`)
             return savedRating !== null
           })
           this.setState({ ratedMovies }, () => {
-            console.log('ответ ratedMovies', this.state.ratedMovies)
+            return this.state.ratedMovies
           })
         })
         .catch((error) => {
@@ -95,36 +88,15 @@ export class App extends Component {
   renderSearchTab = () => {
     const { movies, page, totalPages, genres, guestSessionId } = this.state
     return (
-      <GenreProvider genres={genres}>
-        <Header onSearch={this.handleSearch} />
-        <ul className="section">
-          {movies.map((movie) => {
-            const savedRating = localStorage.getItem(`movieRating_${movie.id}`)
-            const rating = savedRating ? parseFloat(savedRating) : movie.rating
-            console.log('rating:', rating) // Вывод значения rating в консоль
-            return (
-              <BlockMovie
-                key={movie.id}
-                movieId={movie.id}
-                poster_path={movie.poster_path}
-                original_title={movie.original_title}
-                release_date={movie.release_date}
-                overview={movie.overview}
-                genreIds={movie.genre_ids}
-                rating={rating}
-                vote_average={movie.vote_average}
-                guestSessionId={guestSessionId}
-                onRate={this.handleRate}
-              />
-            )
-          })}
-        </ul>
-        <Pagination
-          current={page}
-          total={totalPages}
-          onChange={this.handlePageChange}
-        />
-      </GenreProvider>
+      <SearchTab
+        movies={movies}
+        page={page}
+        totalPages={totalPages}
+        genres={genres}
+        handleSearch={this.handleSearch}
+        handleRate={this.handleRate}
+        guestSessionId={guestSessionId}
+      />
     )
   }
 
@@ -134,23 +106,11 @@ export class App extends Component {
       return <p>{NO_RATED_MOVIES_MESSAGE}</p>
     }
     return (
-      <GenreProvider genres={genres}>
-        <ul className="section">
-          {ratedMovies.map((movie) => (
-            <BlockMovie
-              key={movie.id}
-              poster_path={movie.poster_path}
-              original_title={movie.original_title}
-              release_date={movie.release_date}
-              overview={movie.overview}
-              rating={movie.rating}
-              vote_average={movie.vote_average}
-              genreIds={movie.genre_ids}
-              onRate={this.handleRate}
-            />
-          ))}
-        </ul>
-      </GenreProvider>
+      <RatedTab
+        ratedMovies={ratedMovies}
+        genres={genres}
+        handleRate={this.handleRate}
+      />
     )
   }
 
@@ -165,35 +125,12 @@ export class App extends Component {
   render() {
     const { activeTab } = this.state
     return (
-      <>
-        <Online>
-          <div className="basic">
-            <div className="tabs">
-              <Button
-                className={activeTab === 'search' ? 'active' : ''}
-                onClick={() => this.handleTabChange('search')}
-              >
-                Search
-              </Button>
-              <Button
-                className={activeTab === 'rated' ? 'active' : ''}
-                onClick={() => this.handleTabChange('rated')}
-              >
-                Rated
-              </Button>
-            </div>
-            {activeTab === 'search'
-              ? this.renderSearchTab()
-              : this.renderRatedTab()}
-          </div>
-        </Online>
-        <Offline>
-          <div className="no-internet">
-            <div className="no-internet-book" alt="нет интернета" />
-            <span>{NO_INTERNET_MESSAGE}</span>
-          </div>
-        </Offline>
-      </>
+      <OnlineOfflineComponent
+        activeTab={activeTab}
+        handleTabChange={this.handleTabChange}
+        renderSearchTab={this.renderSearchTab}
+        renderRatedTab={this.renderRatedTab}
+      />
     )
   }
 }

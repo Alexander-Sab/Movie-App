@@ -6,6 +6,7 @@ import { shortenText, handleImageError } from '../utils/utils'
 import {
   NO_OVERVIEW_MESSAGE,
   IMAGE_ERROR_MESSAGE,
+  GENRE_ERROR_MESSAGE,
 } from '../constants/constants'
 import './BlockMovie.css'
 
@@ -25,7 +26,7 @@ export class BlockMovie extends Component {
     this.setState({ loading: true }, () => {
       setTimeout(() => {
         this.setState({ loading: false })
-      }, 2000)
+      }, 1000)
     })
     const { movieId, rating } = this.props
     const savedRating = localStorage.getItem(`movieRating_${movieId}`)
@@ -69,7 +70,6 @@ export class BlockMovie extends Component {
   }
   handleBlockMovieRate = (newRating) => {
     newRating = Math.min(10, Math.max(1, newRating))
-    console.log('ответ newRating', newRating)
     if (newRating < 1 || newRating > 10) {
       console.error('Оценка должна быть в диапазоне от 1 до 10')
       return
@@ -114,21 +114,27 @@ export class BlockMovie extends Component {
               </div>
             </div>
             <div className="description-production">{release_date}</div>
-            <div className="description-genre">
-              {genres.map((genre) => {
-                if (this.props.genreIds.includes(genre.id)) {
-                  return (
-                    <button
-                      key={genre.id}
-                      className="description-genre__button"
-                    >
-                      {genre.name}
-                    </button>
-                  )
-                }
-                return null
-              })}
-            </div>
+            {genres.length > 0 ? (
+              <div className="description-genre">
+                {genres.map((genre) => {
+                  if (this.props.genreIds.includes(genre.id)) {
+                    return (
+                      <button
+                        key={genre.id}
+                        className="description-genre__button"
+                      >
+                        {genre.name}
+                      </button>
+                    )
+                  }
+                  return null
+                })}
+              </div>
+            ) : (
+              <div className="description-genre">
+                <p>{GENRE_ERROR_MESSAGE}</p>
+              </div>
+            )}
             {overview ? (
               <div className="description-story">
                 <p className="description-story__text">

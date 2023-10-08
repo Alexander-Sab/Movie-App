@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { DEBOUNCE_DELAY } from '../constants/constants'
 import './Header.css'
 
-const Header = ({ onSearch }) => {
+export const Header = ({ onSearch }) => {
   const [searchValue, setSearchValue] = useState('')
 
   const handleSearchChange = debounce((value) => {

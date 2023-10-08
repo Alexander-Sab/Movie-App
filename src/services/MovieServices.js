@@ -23,7 +23,6 @@ class MovieServices {
       .get(url, { ...this.options })
       .then((response) => {
         const guestSessionId = response.data.guest_session_id
-        console.log('ответ guestSessionId', guestSessionId)
         return guestSessionId
       })
       .catch((error) => {
@@ -69,7 +68,6 @@ class MovieServices {
     return axios
       .get(url, { ...this.options, params })
       .then((response) => {
-        console.log('Ответ сервера:', response.data)
         return response.data.results
       })
       .catch((error) => console.error(error))
@@ -84,13 +82,9 @@ class MovieServices {
     const body = {
       value: rating,
     }
-    console.log('movieId:', movieId)
-    console.log('guestSessionId:', guestSessionId)
-    console.log('value:', rating)
     return axios
       .post(url, body, { ...this.options, params })
       .then((response) => {
-        console.log('пост', response.data)
         return response.data
       })
       .catch((error) => {
