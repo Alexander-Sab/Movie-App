@@ -5,6 +5,8 @@ import { GenreProvider } from '../GenreContext/GenreContext'
 import Header from '../Header'
 import BlockMovie from '../BlockMovie'
 
+import './SearchTab.css'
+
 export const SearchTab = ({
   movies,
   page,

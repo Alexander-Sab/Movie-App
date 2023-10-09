@@ -6,26 +6,6 @@
     font-family: Inter UI;
     color: #333;
   }
-.basic {
-  max-width: 1440px;
-  margin: 0 auto;
-  
-}
-.section { 
-  
-display: flex;
-flex-wrap: wrap;
-white-space: normal; 
-justify-content: center;
-align-items: center;
-justify-content: space-between;
-margin: 0;
-padding: 0;
-}
-
-
-
-
 
 .scene-cover {
     max-width: 183px;
@@ -44,30 +24,10 @@ padding: 0;
     flex-shrink: 0;
   }
 
-
-.no-internet {
-  display: flex;
-  
-  width: 100%;
-
-
-
-}
-
-span {
-  display: block; 
-  
-  text-align: center; 
-  margin: auto;     
-}
-
-
 .no-results {
   text-align: center;
 }
-.tabs {
-  text-align: center;
-}
+
 .ant-btn {
 border: none; 
 border-radius: 0;

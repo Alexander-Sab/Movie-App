@@ -35,7 +35,7 @@ export const OnlineOfflineComponent = ({
       <Offline>
         <div className="no-internet">
           <div className="no-internet-book" />
-          <span>{NO_INTERNET_MESSAGE}</span>
+          <span className="no-internet-book__text">{NO_INTERNET_MESSAGE}</span>
         </div>
       </Offline>
     </>

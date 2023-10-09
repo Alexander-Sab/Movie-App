@@ -20,9 +20,17 @@
   margin-right: 37px;
   }
 
-.scene-cover  {
-
-}
+  
+.scene-imageError {
+  width: 183px;
+  height: 281px;
+  background-color: #F4F8FF;
+  background-image: url("../../../public/img/picture-svgrepo-com.svg") ;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50px;
+  flex-shrink: 0;
+  }
 
 .description {
   padding-left: 20px;

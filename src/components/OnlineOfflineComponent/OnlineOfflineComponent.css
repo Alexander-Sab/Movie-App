@@ -1,0 +1,20 @@
+.basic {
+    max-width: 1440px;
+    margin: 0 auto;
+    
+  }
+
+  .tabs {
+    text-align: center;
+  }
+
+  .no-internet {
+    display: flex;
+    width: 100%;
+  }
+
+  .no-internet-book__text {
+    display: block; 
+    text-align: center; 
+    margin: auto;     
+  }

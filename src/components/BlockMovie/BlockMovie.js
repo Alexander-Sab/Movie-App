@@ -80,14 +80,8 @@ export class BlockMovie extends Component {
     this.setState({ rating: newRating })
   }
   renderMovieDescription = () => {
-    const {
-      original_title,
-      release_date,
-      overview,
-      vote_average,
-      onRate,
-      movieId,
-    } = this.props
+    const { original_title, release_date, overview, vote_average, movieId } =
+      this.props
     const { ratings } = this.state
     const grade =
       ratings[movieId] !== undefined ? ratings[movieId] : vote_average
