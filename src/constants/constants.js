@@ -1,6 +1,6 @@
-export const API_KEY = 'd8bf944b03cd2f8fd5f634711d8edec0'
+export const API_KEY = process.env.REACT_APP_API_KEY
 export const BASE_URL = 'https://api.themoviedb.org/3/'
-export const DEBOUNCE_DELAY = 300
+export const DEBOUNCE_DELAY = 5000
 export const GENRE_LANGUAGE = 'ru-RU'
 export const NO_RATED_MOVIES_MESSAGE = 'No rated movies found'
 export const NO_OVERVIEW_MESSAGE = 'Movie overview not specified'

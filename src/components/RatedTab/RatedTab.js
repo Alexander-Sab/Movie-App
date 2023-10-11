@@ -2,7 +2,7 @@ import React from 'react'
 
 import { GenreProvider } from '../GenreContext/GenreContext'
 import BlockMovie from '../BlockMovie'
-import { NO_RATED_MOVIES_MESSAGE } from '../constants/constants'
+import { NO_RATED_MOVIES_MESSAGE } from '../../constants/constants'
 
 import './RatedTab.css'
 

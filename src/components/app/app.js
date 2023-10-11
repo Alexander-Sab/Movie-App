@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 
-import MovieServices from '../../services/MovieServices'
+import { MovieServices } from '../../services/MovieServices'
 import SearchTab from '../SearchTab'
 import RatedTab from '../RatedTab'
 import OnlineOfflineComponent from '../OnlineOfflineComponent'
-import { NO_RATED_MOVIES_MESSAGE } from '../constants/constants'
-import './app.css'
+import { NO_RATED_MOVIES_MESSAGE } from '../../constants/constants'
+import './App.css'
 
 export class App extends Component {
   state = {
@@ -14,13 +14,17 @@ export class App extends Component {
     page: 1,
     totalPages: 0,
     activeTab: 'search',
-    genres: [],
+    genres: [], // Жанры
     guestSessionId: null,
     ratedMovies: [],
   }
 
   async componentDidMount() {
-    await this.loadGenres()
+    const { genres } = this.state
+    if (genres.length === 0) {
+      // Проверяем, есть ли уже жанры в состоянии
+      await this.loadGenres()
+    }
     this.searchMovies()
     this.createGuestSession()
   }

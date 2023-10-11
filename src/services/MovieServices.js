@@ -1,12 +1,8 @@
 import axios from 'axios'
 
-import {
-  API_KEY,
-  BASE_URL,
-  GENRE_LANGUAGE,
-} from '../components/constants/constants'
+import { API_KEY, BASE_URL, GENRE_LANGUAGE } from '../constants/constants'
 
-class MovieServices {
+export class MovieServices {
   static apiKey = API_KEY
   static baseUrl = BASE_URL
   static options = {

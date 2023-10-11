@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { Rate, Space, Spin, Alert } from 'antd'
 
 import { GenreContext } from '../GenreContext/GenreContext'
-import { shortenText, handleImageError } from '../utils/utils'
+import { shortenText, handleImageError } from '../../utils/utils'
 import {
   NO_OVERVIEW_MESSAGE,
   IMAGE_ERROR_MESSAGE,
   GENRE_ERROR_MESSAGE,
-} from '../constants/constants'
+} from '../../constants/constants'
 import './BlockMovie.css'
 
 export class BlockMovie extends Component {
