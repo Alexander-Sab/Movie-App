@@ -15,11 +15,11 @@ export class BlockMovie extends Component {
     loading: false,
     imageError: false,
     error: null,
-    ratings: {},
+    rating: {},
   }
   componentDidUpdate(prevProps) {
     if (prevProps.rating !== this.props.rating) {
-      this.setState({ ratings: this.props.rating })
+      this.setState({ rating: this.props.rating })
     }
   }
   componentDidMount() {
@@ -28,12 +28,10 @@ export class BlockMovie extends Component {
         this.setState({ loading: false })
       }, 1000)
     })
-    const { movieId, rating } = this.props
+    const { movieId } = this.props
     const savedRating = localStorage.getItem(`movieRating_${movieId}`)
     if (savedRating) {
       this.setState({ rating: parseFloat(savedRating) })
-    } else if (rating) {
-      this.setState({ rating })
     }
   }
   renderLoadingSpinner = () => {
@@ -75,24 +73,20 @@ export class BlockMovie extends Component {
       return
     }
     const { movieId, onRate, guestSessionId } = this.props
-    onRate(movieId, newRating, guestSessionId)
+    onRate(movieId, newRating)
     localStorage.setItem(`movieRating_${movieId}`, newRating.toString())
     this.setState({ rating: newRating })
   }
   renderMovieDescription = () => {
-    const { original_title, release_date, overview, vote_average, movieId } =
-      this.props
-    const { ratings } = this.state
-    const grade =
-      ratings[movieId] !== undefined ? ratings[movieId] : vote_average
+    const { original_title, release_date, overview, vote_average } = this.props
     const shortenedDescription = overview ? shortenText(overview, 310) : ''
-    let circleColor = '#E90000'
+    let circleColorClass = 'description-rating-circle__red'
     if (vote_average >= 3 && vote_average < 5) {
-      circleColor = '#E97E00'
+      circleColorClass = 'description-rating-circle__orange'
     } else if (vote_average >= 5 && vote_average < 7) {
-      circleColor = '#E9D100'
+      circleColorClass = 'description-rating-circle__yellow'
     } else if (vote_average >= 7) {
-      circleColor = '#66E900'
+      circleColorClass = 'description-rating-circle__green'
     }
     return (
       <GenreContext.Consumer>
@@ -100,10 +94,7 @@ export class BlockMovie extends Component {
           <div className="description">
             <div className="block">
               <h3 className="description-title">{original_title}</h3>
-              <div
-                className="rating-circle"
-                style={{ borderColor: circleColor }}
-              >
+              <div className={`description-rating-circle ${circleColorClass}`}>
                 {vote_average}
               </div>
             </div>
@@ -113,12 +104,12 @@ export class BlockMovie extends Component {
                 {genres.map((genre) => {
                   if (this.props.genreIds.includes(genre.id)) {
                     return (
-                      <button
+                      <span
                         key={genre.id}
                         className="description-genre__button"
                       >
                         {genre.name}
-                      </button>
+                      </span>
                     )
                   }
                   return null
@@ -148,7 +139,8 @@ export class BlockMovie extends Component {
     )
   }
   render() {
-    const { loading, error, rating } = this.state
+    const { loading, error } = this.state
+    const { rating } = this.props
     return (
       <li className="block-movie">
         {loading && this.renderLoadingSpinner()}

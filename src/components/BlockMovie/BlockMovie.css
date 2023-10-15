@@ -43,6 +43,36 @@ margin: 0px;
 font-size: 20px;
 }
 
+.description-rating-circle {
+  display: flex;
+    border: 3px solid;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    justify-self: end;
+    background-color: transparent;
+    box-shadow: 0 0 3px rgba(3, 3, 3, 0.3);
+}
+
+.description-rating-circle__red {
+  border-color: #E90000;
+}
+
+.description-rating-circle__orange {
+  border-color: #E97E00;
+}
+
+.description-rating-circle__yellow {
+  border-color: #E9D100;
+}
+
+.description-rating-circle__green {
+  border-color: #66E900;
+}
 
 .description-production {
   margin-bottom: 9px;

@@ -26,7 +26,7 @@ export const SearchTab = ({
       <ul className="section">
         {movies.map((movie) => {
           const savedRating = localStorage.getItem(`movieRating_${movie.id}`)
-          const rating = savedRating ? parseFloat(savedRating) : movie.rating
+          const rating = savedRating ? parseFloat(savedRating) : {}
           return (
             <BlockMovie
               key={movie.id}

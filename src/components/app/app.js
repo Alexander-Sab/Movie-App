@@ -56,10 +56,23 @@ export class App extends Component {
   createGuestSession = async () => {
     try {
       const guestSessionId = await MovieServices.createGuestSession()
-      this.setState({ guestSessionId })
+      this.setState({ guestSessionId }, () => {
+        this.loadRatedMovies(guestSessionId)
+      })
     } catch (error) {
       console.error(error)
     }
+  }
+
+  loadRatedMovies = (guestSessionId) => {
+    MovieServices.getRatedMovies(guestSessionId)
+      .then((response) => {
+        const ratedMovies = response.movies
+        this.setState({ ratedMovies })
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   handleRate = (movieId, newRating) => {
@@ -71,6 +84,10 @@ export class App extends Component {
     }
     const updatedMovies = [...movies]
     updatedMovies[movieIndex].rating = newRating
+
+    console.log('newRating:', newRating)
+    console.log('updatedMovies:', updatedMovies)
+
     this.setState({ movies: updatedMovies }, () => {
       MovieServices.rateMovie(movieId, newRating, guestSessionId)
         .then(() => {
@@ -106,14 +123,19 @@ export class App extends Component {
 
   renderRatedTab = () => {
     const { ratedMovies, genres } = this.state
+    console.log('возврат оцененных фильмов', ratedMovies)
     if (!ratedMovies || ratedMovies.length === 0) {
       return <p>{NO_RATED_MOVIES_MESSAGE}</p>
     }
+    ratedMovies.forEach((movie) => {
+      console.log('фильмы', movie)
+    })
     return (
       <RatedTab
         ratedMovies={ratedMovies}
         genres={genres}
         handleRate={this.handleRate}
+        rating={ratedMovies.rating}
       />
     )
   }
