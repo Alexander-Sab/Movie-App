@@ -1,0 +1,42 @@
+
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+
+.scene-cover {
+    max-width: 183px;
+    max-height: 281px;
+    
+  }
+
+  .scene-imageError {
+    width: 183px;
+    height: 281px;
+    background-color: #F4F8FF;
+    background-image: url("../../../public/img/picture-svgrepo-com.svg") ;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50px;
+    flex-shrink: 0;
+  }
+
+.no-results {
+  text-align: center;
+}
+
+.ant-btn {
+border: none; 
+border-radius: 0;
+background-color: transparent;
+border-bottom: 1px solid #E8E8E8;
+transition: border-bottom-color 0.3s;
+margin-bottom: 20px;
+}
+
+.ant-pagination {
+  text-align: center;
+}
